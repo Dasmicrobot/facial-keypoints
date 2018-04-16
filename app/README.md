@@ -1,3 +1,6 @@
+In progress
+================
+
 ## Conda environment
 
 https://stackoverflow.com/a/41274348/906265
@@ -7,5 +10,9 @@ https://stackoverflow.com/a/41274348/906265
 
 - Create environment:
 `$ conda env create -f conda_requirements.yml`
+
+## Run app
+
+`gunicorn -w 4 -b 0.0.0.0:5000 -k gevent app:app`
 
 
