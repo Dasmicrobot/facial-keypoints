@@ -1,9 +1,7 @@
-import io
 import os
 
 import tensorflow as tf
-from PIL import Image
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, Response, stream_with_context
 from keras.models import model_from_json
 
 """
@@ -48,8 +46,15 @@ def predict():
     if not allowed_file(file.filename):
         return 'Only {} types are allowed'.format(allowed_extensions), 400
 
-    # return file.content_type
-    send_file(Image.open(io.BytesIO(file.read())), mimetype=file.content_type)
+    # render back uploaded file for testing purposes
+    def generate():
+        while True:
+            data = file.read()
+            if not data:
+                break
+            yield data
+
+    return Response(stream_with_context(generate()), mimetype=file.mimetype)
 
 
 def load_model():
@@ -71,7 +76,6 @@ def load_model():
     print("Tensorflow graph obtained")
 
     return loaded_model, graph
-
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))
