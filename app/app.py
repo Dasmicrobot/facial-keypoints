@@ -1,9 +1,10 @@
 import os
 
-import tensorflow as tf
-from flask import Flask, render_template, request, Response, stream_with_context
-from keras.models import model_from_json
 import cv2
+import numpy as np
+import tensorflow as tf
+from flask import Flask, render_template, request, Response, make_response, redirect, url_for
+from keras.models import model_from_json
 
 """
 Some helping material:
@@ -30,6 +31,7 @@ def convert_image_for_prediction(image_file):
     pass
 
 
+@app.route('/index')
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -47,15 +49,14 @@ def predict():
     if not allowed_file(file.filename):
         return 'Only {} types are allowed'.format(allowed_extensions), 400
 
-    # render back uploaded file for testing purposes
-    def generate():
-        while True:
-            data = file.read()
-            if not data:
-                break
-            yield data
+    file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    return Response(stream_with_context(generate()), mimetype=file.mimetype)
+    _, buff = cv2.imencode(".jpg", gray)
+    response = make_response(buff.tobytes())
+    response.headers['Content-Type'] = 'image/jpeg'
+    return response
 
 
 def load_model():
@@ -77,6 +78,7 @@ def load_model():
     print("Tensorflow graph obtained")
 
     return loaded_model, graph
+
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))
