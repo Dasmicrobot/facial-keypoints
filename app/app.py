@@ -3,6 +3,7 @@ import os
 import tensorflow as tf
 from flask import Flask, render_template, request, Response, stream_with_context
 from keras.models import model_from_json
+import cv2
 
 """
 Some helping material:
