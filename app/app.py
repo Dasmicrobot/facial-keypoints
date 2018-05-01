@@ -53,7 +53,16 @@ def predict():
     img = cv2.imdecode(file_bytes, cv2.IMREAD_UNCHANGED)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    _, buff = cv2.imencode(".jpg", gray)
+    face_cascade = cv2.CascadeClassifier('../detector_architectures/haarcascade_frontalface_default.xml')
+
+    # Detect the faces in image
+    faces = face_cascade.detectMultiScale(gray, 1.5, 3, minSize=(50, 50))
+    # Get the bounding box for each detected face
+    for (x,y,w,h) in faces:
+        # Add a red bounding box to the detections image
+        cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 3)
+
+    _, buff = cv2.imencode(".jpg", img)
     response = make_response(buff.tobytes())
     response.headers['Content-Type'] = 'image/jpeg'
     return response
