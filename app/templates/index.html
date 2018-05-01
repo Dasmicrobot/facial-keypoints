@@ -1,20 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Flask server</title>
+    <title>Face detection</title>
+    <meta name="description" content="Detect facial points through the use of webcam and predicting server">
+    <meta name="author" content="//ivarprudnikov.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta id="theme-color" name="theme-color" content="#fff">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
 </head>
 
 <body>
 
-<h1>Upload image for prediction</h1>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">Face detector</a>
+    </div>
+</nav>
 
-<form method=POST enctype=multipart/form-data action="{{ url_for('predict') }}">
-    <input type=file name=image>
-    <input type="submit">
-</form>
+<main role="main" class="container">
 
+    <div class="row">
+        <div class="col-6">
+            <video autoplay playsinline></video>
+        </div>
+        <div class="col">
+            <h1 class="cover-heading"><< Camera preview</h1>
+            <p class="lead">Enable webcam please</p>
+
+            <form class="form" method=POST enctype=multipart/form-data action="{{ url_for('predict') }}">
+                <input type=file name=image>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+
+</main>
+
+
+
+<script src="{{ url_for('static',filename='jquery-3.3.1.js') }}"></script>
+<script src="{{ url_for('static',filename='bootstrap.bundle.js') }}"></script>
 <script src="{{ url_for('static',filename='index.js') }}"></script>
 
 </body>
