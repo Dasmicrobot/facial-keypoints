@@ -3,7 +3,7 @@ import os
 import cv2
 import numpy as np
 import tensorflow as tf
-from flask import Flask, render_template, request, Response, make_response, redirect, url_for
+from flask import Flask, render_template, request, make_response, jsonify
 from keras.models import model_from_json
 
 """
@@ -21,9 +21,14 @@ app = Flask(__name__)
 # limit max file size
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 allowed_extensions = set(['png', 'jpg', 'jpeg'])
+allowed_content_types = set(['image/png', 'image/jpg', 'image/jpeg'])
 
 
-def allowed_file(filename):
+def allowed_file(file):
+    content_type = file.content_type
+    if content_type is not None:
+        return content_type in allowed_content_types
+    filename = file.filename
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
 
@@ -46,7 +51,7 @@ def predict():
     if file.filename == '':
         return "No selected image", 400
 
-    if not allowed_file(file.filename):
+    if not allowed_file(file):
         return 'Only {} types are allowed'.format(allowed_extensions), 400
 
     file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
@@ -56,12 +61,22 @@ def predict():
     face_cascade = cv2.CascadeClassifier('../detector_architectures/haarcascade_frontalface_default.xml')
 
     # Detect the faces in image
+    faces_list = list()
     faces = face_cascade.detectMultiScale(gray, 1.5, 3, minSize=(50, 50))
-    # Get the bounding box for each detected face
-    for (x,y,w,h) in faces:
-        # Add a red bounding box to the detections image
-        cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 3)
+    for (x, y, w, h) in faces:
+        faces_list.append({'x': int(x), 'y': int(y), 'w': int(w), 'h': int(h)})
 
+    return jsonify(data=faces_list)
+
+
+def draw_face_boxes(img, faces):
+    # Get the bounding box for each detected face
+    for (x, y, w, h) in faces:
+        # Add a red bounding box to the detections image
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 3)
+
+
+def cv2_image_to_response(img):
     _, buff = cv2.imencode(".jpg", img)
     response = make_response(buff.tobytes())
     response.headers['Content-Type'] = 'image/jpeg'

@@ -24,17 +24,16 @@
 <main role="main" class="container">
 
     <div class="row">
-        <div class="col-6">
-            <video autoplay playsinline></video>
+        <div class="col">
+            <div class="camera">
+                <video id="video">Video stream not available.</video>
+                <button id="takephoto" class="btn btn-primary">Take photo</button>
+                <button id="startplayback" class="btn">Start playback</button>
+                <button id="stopplayback" class="btn">Stop playback</button>
+            </div>
         </div>
         <div class="col">
-            <h1 class="cover-heading"><< Camera preview</h1>
-            <p class="lead">Enable webcam please</p>
-
-            <form class="form" method=POST enctype=multipart/form-data action="{{ url_for('predict') }}">
-                <input type=file name=image>
-                <input type="submit">
-            </form>
+            <canvas id="canvas"></canvas>
         </div>
     </div>
 
