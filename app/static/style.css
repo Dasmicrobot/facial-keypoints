@@ -1,0 +1,29 @@
+.camera {
+    position: relative;
+    display: block;
+    width: 480px;
+    height: 360px;
+    margin: 0 auto 20px;
+}
+
+.camera #imagecapture,
+.camera #video,
+.camera #videooverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.camera #imagecapture {
+    z-index: 100;
+}
+.camera #video {
+    z-index: 200;
+}
+.camera #videooverlay {
+    z-index: 300;
+}
