@@ -2,9 +2,7 @@ import os
 
 import cv2
 import numpy as np
-import tensorflow as tf
-from flask import Flask, render_template, request, make_response, jsonify
-from keras.models import model_from_json
+from flask import Flask, render_template, request, jsonify
 
 """
 Some helping material:
@@ -30,10 +28,6 @@ def allowed_file(file):
         return content_type in allowed_content_types
     filename = file.filename
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
-
-
-def convert_image_for_prediction(image_file):
-    pass
 
 
 @app.route('/index')
@@ -76,41 +70,6 @@ def predict():
     resp['eyes'] = eyes_list
 
     return jsonify(data=resp)
-
-
-def draw_face_boxes(img, faces):
-    # Get the bounding box for each detected face
-    for (x, y, w, h) in faces:
-        # Add a red bounding box to the detections image
-        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 3)
-
-
-def cv2_image_to_response(img):
-    _, buff = cv2.imencode(".jpg", img)
-    response = make_response(buff.tobytes())
-    response.headers['Content-Type'] = 'image/jpeg'
-    return response
-
-
-def load_model():
-    json_file = open('model.json', 'r')
-    loaded_model_json = json_file.read()
-    json_file.close()
-    loaded_model = model_from_json(loaded_model_json)
-    print("Model loaded loaded from json")
-
-    # load woeights into new model
-    loaded_model.load_weights("model.h5")
-    print("Model weights loaded from disk")
-
-    # compile and evaluate loaded model
-    loaded_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    print("Model compiled")
-
-    graph = tf.get_default_graph()
-    print("Tensorflow graph obtained")
-
-    return loaded_model, graph
 
 
 if __name__ == "__main__":
