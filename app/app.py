@@ -18,8 +18,8 @@ https://blog.hyperiondev.com/index.php/2018/02/01/deploy-machine-learning-models
 app = Flask(__name__)
 # limit max file size
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
-allowed_extensions = set(['png', 'jpg', 'jpeg'])
-allowed_content_types = set(['image/png', 'image/jpg', 'image/jpeg'])
+allowed_extensions = {'png', 'jpg', 'jpeg'}
+allowed_content_types = {'image/png', 'image/jpg', 'image/jpeg'}
 
 
 def allowed_file(file):
