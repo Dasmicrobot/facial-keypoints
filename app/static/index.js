@@ -60,7 +60,7 @@
             }).done(function (response) {
                 clearoverlay();
                 var context = videooverlay.getContext('2d');
-                var faces = (response && response.data) || [];
+                var faces = (response && response.data && response.data.faces_list) || [];
                 faces.forEach(function (face) {
                     context.beginPath();
                     context.lineWidth = "2";

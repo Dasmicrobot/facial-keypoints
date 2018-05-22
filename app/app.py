@@ -61,12 +61,14 @@ def predict():
     face_cascade = cv2.CascadeClassifier('../detector_architectures/haarcascade_frontalface_default.xml')
 
     # Detect the faces in image
+    resp = dict()
     faces_list = list()
     faces = face_cascade.detectMultiScale(gray, 1.5, 3, minSize=(50, 50))
     for (x, y, w, h) in faces:
         faces_list.append({'x': int(x), 'y': int(y), 'w': int(w), 'h': int(h)})
 
-    return jsonify(data=faces_list)
+    resp['faces_list'] = faces_list
+    return jsonify(data=resp)
 
 
 def draw_face_boxes(img, faces):
