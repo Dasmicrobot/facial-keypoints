@@ -32,6 +32,7 @@
             stop();
             ev.preventDefault();
         }, false);
+        stopplayback.hidden = true;
     }
 
     function clearphoto() {
@@ -79,6 +80,9 @@
                 video.srcObject = stream;
                 video.play();
                 interval = setInterval(takepicture.bind(this), prediction_interval);
+
+                startplayback.hidden = true;
+                stopplayback.hidden = false;
             })
             .catch(function (error) {
                 console.log('getUserMedia error: ', error);
@@ -97,6 +101,9 @@
         if (interval) {
             clearInterval(interval);
         }
+
+        startplayback.hidden = false;
+        stopplayback.hidden = true;
     }
 
     window.addEventListener('load', startup, false);
