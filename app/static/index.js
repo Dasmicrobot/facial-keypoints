@@ -60,16 +60,23 @@
             }).done(function (response) {
                 clearoverlay();
                 var context = videooverlay.getContext('2d');
-                var faces = (response && response.data && response.data.faces_list) || [];
-                faces.forEach(function (face) {
-                    context.beginPath();
-                    context.lineWidth = "2";
-                    context.strokeStyle = "red";
-                    context.rect(face.x, face.y, face.w, face.h);
-                    context.stroke();
-                })
+                var respData = (response && response.data) || {};
+                (respData.faces || []).forEach(function (rect) {
+                    drawRectangle(context, rect);
+                });
+                (respData.eyes || []).forEach(function (rect) {
+                    drawRectangle(context, rect);
+                });
             });
         })
+    }
+
+    function drawRectangle(context, rect) {
+        context.beginPath();
+        context.lineWidth = "2";
+        context.strokeStyle = "red";
+        context.rect(rect.x, rect.y, rect.w, rect.h);
+        context.stroke();
     }
 
     var interval;

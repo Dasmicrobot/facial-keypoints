@@ -59,6 +59,7 @@ def predict():
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     face_cascade = cv2.CascadeClassifier('../detector_architectures/haarcascade_frontalface_default.xml')
+    eye_cascade = cv2.CascadeClassifier('../detector_architectures/haarcascade_eye.xml')
 
     # Detect the faces in image
     resp = dict()
@@ -66,8 +67,14 @@ def predict():
     faces = face_cascade.detectMultiScale(gray, 1.5, 3, minSize=(50, 50))
     for (x, y, w, h) in faces:
         faces_list.append({'x': int(x), 'y': int(y), 'w': int(w), 'h': int(h)})
+    resp['faces'] = faces_list
 
-    resp['faces_list'] = faces_list
+    eyes_list = list()
+    eyes = eye_cascade.detectMultiScale(gray, 1.1, 2)
+    for (x, y, w, h) in eyes:
+        eyes_list.append({'x': int(x), 'y': int(y), 'w': int(w), 'h': int(h)})
+    resp['eyes'] = eyes_list
+
     return jsonify(data=resp)
 
 
