@@ -9,11 +9,6 @@
       "ContainerPort": "8080"
     }
   ],
-  "Volumes": [
-    {
-      "HostDirectory": "/var/app/detector",
-      "ContainerDirectory": "/usr/src/www"
-    }
-  ],
+  "Volumes": [],
   "Logging": "/usr/src/www"
 }
