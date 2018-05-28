@@ -1,0 +1,9 @@
+.idea/
+.git/
+data/
+images/
+*.ipynb
+*.h5
+*.iml
+CODEOWNERS
+LICENSE
