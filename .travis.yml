@@ -6,6 +6,6 @@ env:
 services:
 - docker
 script:
-- docker login -u _ -p "$HTOKN" registry.heroku.com
+- docker login -u _ -p $HTOKN registry.heroku.com
 - docker build -t registry.heroku.com/facial-keypoints-detector/web -f Dockerfile .
 - docker push registry.heroku.com/facial-keypoints-detector/web
