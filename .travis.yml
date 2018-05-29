@@ -1,0 +1,11 @@
+language: generic
+env:
+  global:
+    secure: mfaJdXCoZq6WYxh6FgFWo6rYagbAvhcZPu0xbCEttD/yQnMbaa2ZtdOyv2gfxwQMJZIAlToIWMV//snVs8rWdw9e8awxtwUVYkVfmQ8kCH9oF7+ZGXKsxgRfREhTGafpLIYuNP9759UAKA+kl3+L02TGA8jjJm6FYQ2HGgQ21RbxgRPLGdsEkRVfC3jdBksbm440JG9tNJ6nlhfdNBCkzEMeFFLsq8t3OI34KwAlQKnhkDPVU0B/dkJbxBS9uq/j5er8oO0FvhQAxbHAepSCMtz68y1yJu75Qqz86waM7fGA5dkEj3P1mvngdtjVi1UHOpq53ynluvPF+3g6GlCu/exE9d4bal3vFcBFfX2ppGj+i4kwIHGi5iGcabeJ0ENPDJcXL/1xZaQzOAd/3GyfrRsNQj9eQcWx2OgDWi2LAZzSM624PsFP2jQ+PCesBNTYLLmsCukD35Xg48NfbeLx1tlB4WlyGMBbSck1z1cpr6omzTahbcqv/BuWYjsfEMX0WGD1zZ0kHzdAquXyHpbYIlS7uO8BnA2QtdTpO4S0SVLNMbHKlBPVQDjuvCxQKP+V3PkLMWx/qBpmj67vpEEsvdu6wk4dJ1zw/1xbj+sXjqz2lkqMZYbrvNaz6Bb43EjlGbQLTHfCnaw1B9kZ6sRFJVsVLlHWjrbjwDidyWZRV3E=
+
+services:
+- docker
+script:
+- docker login -u _ -p "$HTOKN" registry.heroku.com
+- docker build -t registry.heroku.com/facial-keypoints-detector/web -f Dockerfile .
+- docker push registry.heroku.com/facial-keypoints-detector/web
