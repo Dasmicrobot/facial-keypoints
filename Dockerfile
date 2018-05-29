@@ -6,7 +6,7 @@ WORKDIR /usr/src/www
 
 ADD . .
 
-WORKDIR app
+WORKDIR /usr/src/www/app
 
 RUN pip install -r requirements.txt
 
