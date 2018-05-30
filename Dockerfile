@@ -2,9 +2,7 @@ FROM python:3.6.5
 
 RUN mkdir -p /usr/src/www
 
-WORKDIR /usr/src/www
-
-ADD . .
+ADD . /usr/src/www/
 
 WORKDIR /usr/src/www/app
 
