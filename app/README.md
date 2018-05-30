@@ -16,6 +16,6 @@ https://stackoverflow.com/a/41274348/906265
 
 ## Run app
 
-`python app.py`
+`python api.py`
 
 
