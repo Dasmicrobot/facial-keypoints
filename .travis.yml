@@ -1,11 +1,8 @@
 language: generic
+
+script:
+- "curl -H 'Content-Type: application/json' --data '{\"source_type\": \"Branch\", \"source_name\":$TRAVIS_BRANCH}' -X POST $TRIGGER_URL"
+
 env:
   global:
-    secure: mfaJdXCoZq6WYxh6FgFWo6rYagbAvhcZPu0xbCEttD/yQnMbaa2ZtdOyv2gfxwQMJZIAlToIWMV//snVs8rWdw9e8awxtwUVYkVfmQ8kCH9oF7+ZGXKsxgRfREhTGafpLIYuNP9759UAKA+kl3+L02TGA8jjJm6FYQ2HGgQ21RbxgRPLGdsEkRVfC3jdBksbm440JG9tNJ6nlhfdNBCkzEMeFFLsq8t3OI34KwAlQKnhkDPVU0B/dkJbxBS9uq/j5er8oO0FvhQAxbHAepSCMtz68y1yJu75Qqz86waM7fGA5dkEj3P1mvngdtjVi1UHOpq53ynluvPF+3g6GlCu/exE9d4bal3vFcBFfX2ppGj+i4kwIHGi5iGcabeJ0ENPDJcXL/1xZaQzOAd/3GyfrRsNQj9eQcWx2OgDWi2LAZzSM624PsFP2jQ+PCesBNTYLLmsCukD35Xg48NfbeLx1tlB4WlyGMBbSck1z1cpr6omzTahbcqv/BuWYjsfEMX0WGD1zZ0kHzdAquXyHpbYIlS7uO8BnA2QtdTpO4S0SVLNMbHKlBPVQDjuvCxQKP+V3PkLMWx/qBpmj67vpEEsvdu6wk4dJ1zw/1xbj+sXjqz2lkqMZYbrvNaz6Bb43EjlGbQLTHfCnaw1B9kZ6sRFJVsVLlHWjrbjwDidyWZRV3E=
-
-services:
-- docker
-script:
-- docker login -u _ -p $HTOKN registry.heroku.com
-- docker build -t registry.heroku.com/facial-keypoints-detector/web -f Dockerfile .
-- docker push registry.heroku.com/facial-keypoints-detector/web
+    secure: Ky1EV4nSNe/tS57z9VDB9Z9vbzpQVD3W86k0uxguGPQDZQr2JmYeLOJCsLgqzS60F7HhuVgEw+1FzMbv8yJppRBBtocr8lL6zQvdCfffONw4HltnieTan4qeg21pWqWxaZiQbH0CudvDuRH6VWelIGSVkAb6wayIi52YmlWaC4614mxDHVMP+6SZ0cF69IkXLd8IuqQDLfkDalV6ETJv3w+iOuF9RNc5guQthHARvwnJ/zba4GdfCY40o6XGQBT1riVlsbw3UZu7uTxApjp2zJ25OalmTbNXV41bF+F8bbg9XN9JFTETznODcI4pBXPPWdoFaGsc9tnIvvuCd2V00jo3/ktBZcaxEea+JFyLQ1JP7Q4F86JAsecqSvdaiC1Uoh9ePIctZ1MyNK06aGhg3QHT7M4d++JBu5tKootwMjjCu511l5OA6vss/6UfTp7nsPHdKDjoFzVBkvxHurUC8bvclsKwZd361H7gKDQr0upftbu1donPeod49aorkyGHbrdAQGtj+oRGD0er8e+/pGEQ+sYXy1uY59zqo/IytTGU0lxWCx8dtheDUPRrDjWlqhPh+D+RRxIpULh+lFcdtFWax0Jv1+445BO3+dRzlELazdqrk6cazVB4igWqpZUQA4IhZiFCJA6KIXZV9acZNxV1Va+vpOoNqLSj8X6G5dU=
