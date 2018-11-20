@@ -6,14 +6,20 @@
 
 ![Facial Keypoint Detection][image1]
 
-## Webapp
+## Webapp with OpenCV
 
 `app` directory contains web application which serves as a demo to show how face 
-features are detected by using webcam.
+features are detected by using a webcam.
+
+App uses OpenCV with HAAR cascade to detect features on faces.
 
 [Read more](app/README.md)
 
-## Jupyter Notebook
+## Jupyter Notebook (CV_project.ipynb)
+
+- First part shows how to use OpenCV to work with face recognition
+- Second part uses Tensorflow to build CNN and achieve similar outcomes as OpenCV
+
 
 ### Requirements
 

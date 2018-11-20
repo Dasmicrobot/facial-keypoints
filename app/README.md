@@ -1,7 +1,7 @@
-In progress
+Face detector using webcam
 ================
 
-## Conda environment
+## Setup Conda environment
 
 https://stackoverflow.com/a/41274348/906265
 
